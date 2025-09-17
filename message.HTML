@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Message to You</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Great+Vibes&display=swap');
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #ffe5f0, #fceaff);
+    font-family: 'Poppins', sans-serif;
+    color: #4a224a;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: #a82277;
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    color: #fff;
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.8rem;
+    user-select: none;
+  }
+  main {
+    flex-grow: 1;
+    max-width: 700px;
+    margin: 3rem auto 5rem;
+    background: #fff0f5;
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(168,34,107,0.3);
+    font-size: 1.3rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #a82277bb;
+    user-select: none;
+  }
+  /* Popup styles */
+  #sorryPopup {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(41, 9, 56, 0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: fadeInPop 0.7s;
+  }
+  @keyframes fadeInPop {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  #sorryPopup .content {
+    background: #fff0f5;
+    border-radius: 32px;
+    padding: 1rem 1.2rem 1.5rem 1.2rem;
+    box-shadow: 0 8px 32px rgb(168,34,107,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    max-width: 98vw;
+  }
+  #sorryPopup img {
+    max-width: 160px; max-height: 210px;
+    border-radius: 18px;
+    margin: 1.1rem auto;
+    box-shadow: 0 3px 24px #dd4a9277;
+    display: block;
+  }
+  .floating-text {
+    font-family: 'Great Vibes',cursive;
+    color: #a82277;
+    font-size: 2.0rem;
+    font-weight: 600;
+    text-align: center;
+    animation: floatText 2.7s infinite alternate;
+  }
+  .floating-text.bottom {
+    animation-delay: 1.1s;
+    margin-top: 0.2em;
+  }
+  @keyframes floatText {
+    from { transform: translateY(0) scale(1);}
+    to { transform: translateY(-10px) scale(1.04);}
+  }
+  #sorryPopup .close-btn {
+    position: absolute;
+    top: 10px; right: 20px;
+    font-size: 1.5rem;
+    color: #a82277bb;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins',sans-serif;
+  }
+  @media (max-width: 600px) {
+    #sorryPopup .content {
+      padding: 0.6rem 0.2rem 1.1rem 0.2rem;
+      border-radius: 16px;
+    }
+    .floating-text {
+      font-size: 1.35rem;
+      padding: 0 0.12em;
+      max-width: 80vw;
+    }
+    #sorryPopup img {
+      max-width: 72vw;
+      max-height: 32vh;
+      margin: 1rem 0;
+    }
+    #sorryPopup .close-btn {
+      font-size: 2rem;
+      right: 8px;
+      top: 4px;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>Just for You, My Love</header>
+  <main>
+My jaan my bachaa,
+
+This space is only and only for you, bachaa my feelings for u is infinite and that can't be described, due to some days we had some misunderstandings lekin bachaa this page is just a reminder that our love never faded we always loved each other we were always happy har ek moment apna liye special tho, bachaa har baar when we met wo apna liye special hoto tho we were never so clumsy or sad that we could not solve our problems we have always did and bachaa abhi tu overthinking krno chod tu bht stress leri and bachaa I'm here for you if u overthink m overexplain krunga lekin bachaa mana chance toh de. If You will only think of we are not happy want to end toh bachaa m kitno bhi smjhau sab waste h lekin if u just think of one reason we were always happy toh we can sort it again. 
+
+I hope bachaa u want to solve things between us, if u are sorted ki what happened and want to contine our relationship just come back and tell me 3 magical words again.
+but if u want ki I should explain u whole scenario ask me I'll do that too. But just rememer hum bohot muskilo se saath m aaye h just kuch misunderstanding ki wajah sa we can't break it last time when we did it was very tough for us bachaa.
+
+Babbyy meri jaaan take ur decision wisely not in a stress and negative mood bachaa.
+
+ Yours always,
+   Kichuu💗
+  </main>
+  <footer>&hearts; Made with love &hearts;</footer>
+  <!-- Sorry popup starts -->
+  <div id="sorryPopup">
+    <div class="content">
+      <span class="floating-text top">I am so sorry<br>my bachaa</span>
+     <img src="images/sorry1.jpg" alt="Sorry Pose" />
+      <span class="floating-text bottom">I am so sorry<br>my bachaa</span>
+      <button class="close-btn" onclick="document.getElementById('sorryPopup').style.display='none'">&times;</button>
+    </div>
+  </div>
+  <script>
+    window.addEventListener('scroll', function() {
+      if ((window.innerHeight + window.pageYOffset) >= (document.body.offsetHeight - 80)) {
+        document.getElementById('sorryPopup').style.display = 'flex';
+      }
+    });
+  </script>
+</body>
+</html>
