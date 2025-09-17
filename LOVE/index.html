@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You, My Love</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background: #fdf0f5;
+    }
+
+    /* Background overlay */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(0.7);
+      z-index: -1;
+      transition: background-image 0.6s ease-in-out, background 0.6s ease-in-out;
+    }
+
+    /* Hearts background for videos */
+    .hearts-bg {
+      background: linear-gradient(135deg, #a3d8ff, #e6f2ff);
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 0, 100, 0.7);
+      transform: rotate(45deg);
+      animation: float 8s infinite ease-in;
+      border-radius: 4px;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 0, 100, 0.7);
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+
+    /* Container */
+    .container {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      color: #a82277;
+      margin-bottom: 30px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+    }
+
+    /* Gallery images */
+    .gallery img {
+      width: 80%;
+      max-width: 350px;
+      border-radius: 12px;
+      margin: 30px auto;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      opacity: 0.6;
+      transform: scale(0.9);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      display: block;
+    }
+    .gallery img.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Videos */
+    .video-section video {
+      width: 80%;
+      max-width: 350px;
+      border-radius: 12px;
+      margin: 30px auto;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      opacity: 0.6;
+      transform: scale(0.9);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      display: block;
+    }
+    .video-section video.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Welcome popup */
+    #welcomePopup {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(168,34,107,0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      padding: 2rem;
+      z-index: 1000;
+      text-align: center;
+    }
+    #welcomePopup input {
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      font-size: 1.2rem;
+      border-radius: 25px;
+      border: none;
+      text-align: center;
+    }
+    #welcomePopup button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.4rem;
+      font-size: 1.2rem;
+      border-radius: 25px;
+      background: #fff0f5;
+      border: none;
+      color: #a82277;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #welcomePopup .error {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #ffd6e0;
+    }
+
+    /* Continue button */
+    #continueButton {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #a82277;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 6px 20px rgba(168,34,107,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      cursor: pointer;
+      z-index: 999;
+    }
+    #continueButton.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) scale(1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="background" id="background"></div>
+
+  <!-- Welcome -->
+  <div id="welcomePopup">
+    <div>Hello my love, this space is only for you ❤️</div>
+    <div>Type the special name you call me:</div>
+    <input type="text" id="nameInput" placeholder="Your answer here">
+    <button onclick="checkName()">Enter</button>
+    <div class="error" id="errorMsg"></div>
+  </div>
+
+  <div class="container" style="display:none;">
+    <h1>Our Special Memories</h1>
+
+    <!-- Photos -->
+    <div class="gallery">
+      <img src="images/pic1.jpg" alt="Photo 1">
+      <img src="images/pic2.jpg" alt="Photo 2">
+      <img src="images/pic3.jpg" alt="Photo 3">
+      <img src="images/pic4.jpg" alt="Photo 4">
+      <img src="images/pic5.jpg" alt="Photo 5">
+      <img src="images/pic6.jpg" alt="Photo 6">
+      <img src="images/pic7.jpg" alt="Photo 7">
+      <img src="images/pic8.jpg" alt="Photo 8">
+      <img src="images/pic9.jpg" alt="Photo 9">
+      <img src="images/pic10.jpg" alt="Photo 10">
+    </div>
+
+    <!-- Videos -->
+    <div class="video-section">
+      <video controls><source src="videos/vid1.mp4" type="video/mp4"></video>
+      <video controls><source src="videos/vid2.mp4" type="video/mp4"></video>
+      <video controls><source src="videos/vid3.mp4" type="video/mp4"></video>
+      <video controls><source src="videos/vid4.mp4" type="video/mp4"></video>
+    </div>
+  </div>
+
+  <!-- Continue Button -->
+  <button id="continueButton" onclick="goToMessagePage()">Click here to continue if you still love me</button>
+
+  <script>
+    const welcomePopup = document.getElementById('welcomePopup');
+    const errorMsg = document.getElementById('errorMsg');
+    const nameInput = document.getElementById('nameInput');
+    const continueButton = document.getElementById('continueButton');
+    const container = document.querySelector('.container');
+    const bg = document.getElementById('background');
+    const items = document.querySelectorAll(".gallery img, .video-section video");
+    const correctName = "kichu"; // change if needed
+
+   function checkName() {
+  const enteredName = nameInput.value.trim().toLowerCase();
+  if (enteredName === correctName) {
+    welcomePopup.style.display = 'none';
+    container.style.display = 'block';
+    startScrollEffect();
+  } else {
+    errorMsg.textContent = "Hmm, not quite right ❤️";
+
+    // Send wrong name to your email via EmailJS
+    emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+      wrong_name: enteredName,
+      timestamp: new Date().toLocaleString()
+    })
+    .then(function(response) {
+      console.log('Wrong name sent!', response.status, response.text);
+    }, function(error) {
+      console.log('Email not sent', error);
+    });
+  }
+}
+
+    function startScrollEffect() {
+      const options = { threshold: 0.6 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            items.forEach(item => item.classList.remove("active"));
+            entry.target.classList.add("active");
+
+            if (entry.target.tagName === "IMG") {
+              bg.className = "background"; 
+              bg.style.backgroundImage = `url(${entry.target.src})`;
+            }
+            if (entry.target.tagName === "VIDEO") {
+              bg.className = "background hearts-bg";
+              bg.style.backgroundImage = "";
+              spawnHearts();
+            }
+          }
+        });
+      }, options);
+
+      items.forEach(item => observer.observe(item));
+
+      // Set first image as background
+      if (items[0].tagName === "IMG") {
+        bg.style.backgroundImage = `url(${items[0].src})`;
+        items[0].classList.add("active");
+      }
+
+      // Detect scroll to bottom to show button
+      window.addEventListener("scroll", () => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+          continueButton.classList.add("show");
+        } else {
+          continueButton.classList.remove("show");
+        }
+      });
+    }
+
+    function spawnHearts() {
+      const bg = document.querySelector('.hearts-bg');
+      if (!bg) return;
+
+      for (let i = 0; i < 5; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+        bg.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 10000);
+      }
+    }
+
+    function goToMessagePage() {
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "message.html";
+      }, 800);
+    }
+  </script>
+</body>
+</html>
